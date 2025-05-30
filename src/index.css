@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.btn {
+  @apply text-white text-sm px-6 py-[4px] max-h-[30px] rounded-md;
+}
