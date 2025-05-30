@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar.jsx";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [todo, setTodo] = useState("");
@@ -11,9 +12,23 @@ function App() {
   };
 
   const handleAdd = () => {
-    setTodos([...todos, { id: Date.now(), todo, isCompleted: false }]);
+    setTodos([...todos, { id: uuidv4(), todo, isCompleted: false }]);
     setTodo("");
     console.log(todos);
+  };
+
+  const handleCheckbox = (e) => {
+    let id = e.target.name;
+    console.log(id);
+    let index = todos.findIndex((items) => {
+      return items.id === id;
+    });
+    console.log(index);
+
+    let newTodos = [...todos];
+    newTodos[index].isCompleted = !newTodos[index].isCompleted;
+    setTodos(newTodos);
+    console.log(newTodos);
   };
 
   const handleEdit = () => {};
@@ -51,6 +66,13 @@ function App() {
                   key={items.id}
                   className="card border-2 border-dashed border-purple-400 bg-gray-200 flex justify-between items-center p-4 rounded-md"
                 >
+                  <input
+                    type="checkbox"
+                    value={items.isCompleted}
+                    onChange={handleCheckbox}
+                    name={items.id}
+                    id=""
+                  />
                   <div className={items.isCompleted ? "line-through" : ""}>
                     {items.todo}
                   </div>
