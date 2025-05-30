@@ -19,20 +19,23 @@ function App() {
 
   const handleCheckbox = (e) => {
     let id = e.target.name;
-    console.log(id);
     let index = todos.findIndex((items) => {
       return items.id === id;
     });
-    console.log(index);
 
     let newTodos = [...todos];
     newTodos[index].isCompleted = !newTodos[index].isCompleted;
     setTodos(newTodos);
-    console.log(newTodos);
+  };
+
+  const handleDelete = (e, id) => {
+    let newTodos = todos.filter((item) => {
+      return item.id !== id;
+    });
+    setTodos(newTodos);
   };
 
   const handleEdit = () => {};
-  const handleDelete = () => {};
 
   return (
     <>
@@ -84,7 +87,9 @@ function App() {
                       Edit
                     </button>
                     <button
-                      onClick={handleDelete}
+                      onClick={(e) => {
+                        handleDelete(e, items.id);
+                      }}
                       className="btn bg-purple-600 hover:bg-purple-900"
                     >
                       Delete
