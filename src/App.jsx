@@ -7,6 +7,8 @@ function App() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
   const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [todoToDelete, setTodoToDelete] = useState(null);
 
   const handleChange = (e) => {
     setTodo(e.target.value);
@@ -34,7 +36,7 @@ function App() {
     setTodos(newTodos);
   };
 
-  const handleDelete = (e, id) => {
+  const handleDelete = (id) => {
     let newTodos = todos.filter((item) => {
       return item.id !== id;
     });
@@ -45,6 +47,37 @@ function App() {
 
   return (
     <>
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black opacity-80"></div>
+
+          {/* Modal content */}
+          <div className="relative bg-white p-6 rounded shadow-lg text-center z-10">
+            <h3 className="mb-4 text-lg font-bold">
+              Are you sure you want to delete this todo?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <button
+                className="btn bg-gray-400 hover:bg-gray-600"
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="btn bg-red-600 hover:bg-red-800"
+                onClick={() => {
+                  handleDelete(todoToDelete);
+                  setShowModal(false);
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col min-h-screen">
         <Navbar />
 
@@ -101,8 +134,9 @@ function App() {
                       Edit
                     </button>
                     <button
-                      onClick={(e) => {
-                        handleDelete(e, items.id);
+                      onClick={() => {
+                        setShowModal(true);
+                        setTodoToDelete(items.id);
                       }}
                       className="btn bg-purple-600 hover:bg-purple-900"
                     >
