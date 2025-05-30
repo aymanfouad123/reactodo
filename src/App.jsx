@@ -1,15 +1,20 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
+import Navbar from "./components/Navbar.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <div className="container">
-        <div className="bg-red-600">hey i am red</div>
+      <Navbar />
+      <div className="container mx-auto my-5 rounded-2xl p-5 bg-gray-300">
+        <div className="addTodo">
+          <h2 className="text-lg font-bold">Add Todo</h2>
+          <div className="inputTodo flex gap-2 my-3">
+            <input type="text" className="bg-gray-100 rounded-lg" />
+            <button className="bg-black text-white px-6 rounded-lg">Add</button>
+          </div>
+        </div>
+        <h2 className="text-lg font-bold">Your Todo's</h2>
       </div>
     </>
   );
