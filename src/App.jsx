@@ -35,6 +35,7 @@ function App() {
   const handleEdit = (e, id) => {
     let t = todos.find((i) => i.id === id);
     setTodo(t.todo);
+    handleDelete(id);
   };
 
   return (
@@ -71,11 +72,11 @@ function App() {
       )}
 
       {/* Page layout with navbar and vertical flex */}
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-purple-100">
         <Navbar />
         <div className="flex-1 flex justify-center h-full px-4 py-6">
           {/* Container locked in height so inner scroll can work */}
-          <div className="w-full max-w-4xl bg-gray-300 rounded-2xl p-5 flex flex-col overflow-hidden max-h-[calc(100vh-100px)]">
+          <div className="w-full max-w-4xl bg-violet-200 rounded-2xl p-5 flex flex-col overflow-hidden max-h-[calc(100vh-100px)]">
             {/* Todo input section */}
             <div className="relative">
               <h2 className="text-lg font-bold">Add Todo</h2>
@@ -104,7 +105,7 @@ function App() {
 
             {/* Todo list section */}
             <h2 className="text-lg font-bold mt-14">Your Todo's</h2>
-            <div className="flex-1 mt-3 bg-violet-800 overflow-y-auto rounded-md p-3 space-y-3">
+            <div className="flex-1 mt-3 bg-violet-700 overflow-y-auto rounded-md p-3 space-y-3">
               {todos.length === 0 ? (
                 <div className="text-white text-center my-5">
                   No Todo's to display
