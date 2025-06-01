@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar.jsx";
 import { v4 as uuidv4 } from "uuid";
+import { FaEye, FaEyeSlash, FaEdit } from "react-icons/fa";
+import { FaTrashCan } from "react-icons/fa6";
 
 function App() {
   const [todo, setTodo] = useState("");
@@ -132,14 +134,12 @@ function App() {
               <button
                 className={`btn ${
                   hideCompleted
-                    ? "bg-green-900 text-white"
-                    : "bg-green-400 text-black"
-                } hover:bg-green-900 px-3 py-1 rounded`}
+                    ? "bg-gray-800 text-white"
+                    : "bg-violet-800 text-black"
+                } px-3 py-1 rounded`}
                 onClick={() => setHideCompleted((prev) => !prev)}
               >
-                {hideCompleted
-                  ? "Show Completed Todos"
-                  : "Hide Completed Todos"}
+                {hideCompleted ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
             <div className="flex-1 mt-3 bg-violet-700 overflow-y-auto rounded-md p-3 space-y-3">
@@ -167,7 +167,7 @@ function App() {
                         onClick={(e) => handleEdit(e, item.id)}
                         className="btn bg-gray-600 hover:bg-gray-900 text-white px-3 py-1 rounded"
                       >
-                        Edit
+                        <FaEdit />
                       </button>
                       <button
                         onClick={() => {
@@ -176,7 +176,7 @@ function App() {
                         }}
                         className="btn bg-purple-600 hover:bg-purple-900 text-white px-3 py-1 rounded"
                       >
-                        Delete
+                        <FaTrashCan />
                       </button>
                     </div>
                   </div>
