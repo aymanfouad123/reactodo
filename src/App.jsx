@@ -9,6 +9,7 @@ function App() {
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [todoToDelete, setTodoToDelete] = useState(null);
+  const [hideCompleted, setHideCompleted] = useState(false);
 
   // Auto-save whenever todos change
   useEffect(() => {
@@ -22,6 +23,10 @@ function App() {
     let savedTodos = JSON.parse(localStorage.getItem("todos")) || []; // If no local storage data then initialise with an empty array
     setTodos(savedTodos);
   }, []);
+
+  const visibleTodos = hideCompleted
+    ? todos.filter((item) => !item.isCompleted)
+    : todos;
 
   const handleChange = (e) => setTodo(e.target.value);
 
@@ -51,10 +56,6 @@ function App() {
     let t = todos.find((i) => i.id === id);
     setTodo(t.todo);
     handleDelete(id);
-  };
-
-  const saveToLS = () => {
-    localStorage.setItem("todos", JSON.stringify(todos));
   };
 
   return (
@@ -95,7 +96,7 @@ function App() {
         <Navbar />
         <div className="flex-1 flex justify-center h-full px-4 py-6">
           {/* Container locked in height so inner scroll can work */}
-          <div className="w-full max-w-4xl bg-violet-200 rounded-2xl p-5 flex flex-col overflow-hidden max-h-[calc(100vh-100px)]">
+          <div className="w-full max-w-4xl min-h-96 bg-violet-200 rounded-2xl p-5 flex flex-col overflow-hidden max-h-[calc(100vh-100px)]">
             {/* Todo input section */}
             <div className="relative">
               <h2 className="text-lg font-bold">Add Todo</h2>
@@ -123,14 +124,28 @@ function App() {
             </div>
 
             {/* Todo list section */}
-            <h2 className="text-lg font-bold mt-14">Your Todo's</h2>
+            <div className="listHeader flex justify-between items-center mt-14">
+              <h2 className="text-lg font-bold">Your Todo's</h2>
+              <button
+                className={`btn ${
+                  hideCompleted
+                    ? "bg-green-900 text-white"
+                    : "bg-green-400 text-black"
+                } hover:bg-green-900 px-3 py-1 rounded`}
+                onClick={() => setHideCompleted((prev) => !prev)}
+              >
+                {hideCompleted
+                  ? "Show Completed Todos"
+                  : "Hide Completed Todos"}
+              </button>
+            </div>
             <div className="flex-1 mt-3 bg-violet-700 overflow-y-auto rounded-md p-3 space-y-3">
-              {todos.length === 0 ? (
+              {visibleTodos.length === 0 ? (
                 <div className="text-white text-center my-5">
                   No Todo's to display
                 </div>
               ) : (
-                todos.map((item) => (
+                visibleTodos.map((item) => (
                   <div
                     key={item.id}
                     className="bg-gray-200 p-4 rounded-md border-2 border-dashed border-purple-400 flex justify-between items-center"
