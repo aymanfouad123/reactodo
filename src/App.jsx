@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar.jsx";
 import { v4 as uuidv4 } from "uuid";
@@ -9,6 +9,19 @@ function App() {
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [todoToDelete, setTodoToDelete] = useState(null);
+
+  // Auto-save whenever todos change
+  useEffect(() => {
+    if (todos.length > 0) {
+      localStorage.setItem("todos", JSON.stringify(todos));
+    }
+  }, [todos]);
+
+  // Runs on mount
+  useEffect(() => {
+    let savedTodos = JSON.parse(localStorage.getItem("todos")) || []; // If no local storage data then initialise with an empty array
+    setTodos(savedTodos);
+  }, []);
 
   const handleChange = (e) => setTodo(e.target.value);
 
@@ -30,12 +43,18 @@ function App() {
     setTodos(newTodos);
   };
 
-  const handleDelete = (id) => setTodos(todos.filter((item) => item.id !== id));
+  const handleDelete = (id) => {
+    setTodos(todos.filter((item) => item.id !== id));
+  };
 
   const handleEdit = (e, id) => {
     let t = todos.find((i) => i.id === id);
     setTodo(t.todo);
     handleDelete(id);
+  };
+
+  const saveToLS = () => {
+    localStorage.setItem("todos", JSON.stringify(todos));
   };
 
   return (
