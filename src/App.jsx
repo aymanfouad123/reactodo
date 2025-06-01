@@ -98,8 +98,11 @@ function App() {
           {/* Container locked in height so inner scroll can work */}
           <div className="w-full max-w-4xl min-h-96 bg-violet-200 rounded-2xl p-5 flex flex-col overflow-hidden max-h-[calc(100vh-100px)]">
             {/* Todo input section */}
+            <h1 className="font-bold text-3xl text-center text-violet-900 mb-7">
+              Taskify - Your Self Hosted Todo List
+            </h1>
             <div className="relative">
-              <h2 className="text-lg font-bold">Add Todo</h2>
+              <h2 className="text-lg font-bold">Add Todo:</h2>
               <div className="flex gap-2 my-3">
                 <input
                   onChange={handleChange}
@@ -125,7 +128,7 @@ function App() {
 
             {/* Todo list section */}
             <div className="listHeader flex justify-between items-center mt-14">
-              <h2 className="text-lg font-bold">Your Todo's</h2>
+              <h2 className="text-lg font-bold">Your Todo's:</h2>
               <button
                 className={`btn ${
                   hideCompleted
