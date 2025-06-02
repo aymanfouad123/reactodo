@@ -10,4 +10,5 @@ learning react and avoiding tutorial hell.
 
 ## demo
 
-<video src="/public/demo.mov" controls width="600"></video>
+https://github.com/user-attachments/assets/2a145aa5-611e-4665-9166-976ad3aff7ee
+
